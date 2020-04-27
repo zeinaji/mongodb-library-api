@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const app = require('../src/app');
 const User = require('../src/models/users');
-const UserHelpers = require('../tests/helpers/user-helpers');
-const DataFactory = require('../tests/helpers/data-factory');
+const UserHelpers = require('./helpers/user-helpers');
+const DataFactory = require('./helpers/data-factory');
 
 describe('/users', () => {
   beforeAll(done => {
