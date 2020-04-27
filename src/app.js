@@ -1,11 +1,9 @@
 const express = require('express');
+const userController = require('./controllers/users');
 
 const app = express();
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send({
-    message: 'Hello world!',
-  });
-});
+app.post('/users', userController.create);
 
 module.exports = app;
