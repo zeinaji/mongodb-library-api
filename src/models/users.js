@@ -1,11 +1,23 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const isEmail = require('isemail');
 
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  email: String,
-  password: String,
+  email: {
+    type: String,
+    validate: [isEmail.validate, 'Invalid email address'],
+  },
+  password: {
+    type: String,
+    validate: [
+      password => {
+        return password.length >= 8;
+      },
+      'Password must be at least 8 characters long',
+    ],
+  },
 });
 
 userSchema.pre('save', function encryptPassword(next) {
@@ -23,8 +35,8 @@ userSchema.pre('save', function encryptPassword(next) {
   }
 });
 
-userSchema.methods.sanitise = user => {
-  const { password, ...modifiedUser } = user.toObject();
+userSchema.methods.sanitise = function() {
+  const { password, ...modifiedUser } = this.toObject();
   return modifiedUser;
 };
 

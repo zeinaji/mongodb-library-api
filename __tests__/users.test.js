@@ -47,4 +47,41 @@ describe('/users', () => {
         });
     });
   });
+
+  it('responds with an error if the email entered is not valid', done => {
+    request(app)
+      .post('/users')
+      .send({
+        firstName: 'Zein',
+        lastName: 'Aji',
+        email: 'Zein@',
+        password: 'Zeinaji97',
+      })
+      .then(res => {
+        expect(res.status).toBe(400);
+        expect(res.body.errors.email).toBe('Invalid email address');
+        User.countDocuments((_, count) => {
+          expect(count).toBe(0);
+          done();
+        });
+      });
+  });
+  it('responds with an error if the password is not long enough', done => {
+    request(app)
+      .post('/users')
+      .send({
+        firstName: 'Zein',
+        lastName: 'Aji',
+        email: 'zeinaji97@gmail.com',
+        password: 'zein',
+      })
+      .then(res => {
+        expect(res.status).toBe(400);
+        expect(res.body.errors.password).toBe('Password must be at least 8 characters long');
+        User.count((_, count) => {
+          expect(count).toBe(0);
+          done();
+        });
+      });
+  });
 });
