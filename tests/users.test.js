@@ -1,31 +1,9 @@
-const mongoose = require('mongoose');
 const app = require('../src/app');
 const User = require('../src/models/users');
 const UserHelpers = require('./helpers/user-helpers');
 const DataFactory = require('./helpers/data-factory');
 
 describe('/users', () => {
-  beforeAll(done => {
-    const url = process.env.DATABASE_CONN;
-    mongoose.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    done();
-  });
-
-  afterEach(done => {
-    User.deleteMany({}, () => {
-      done();
-    });
-  });
-
-  afterAll(done => {
-    mongoose.connection.db.dropDatabase();
-    mongoose.connection.close();
-    done();
-  });
-
   describe('POST /users', () => {
     it('creates a new user in the database', done => {
       const data = DataFactory.user({ email: 'zeinaji97@gmail.com' });

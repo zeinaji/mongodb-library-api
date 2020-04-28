@@ -13,3 +13,17 @@ exports.signUp = (app, data) =>
         }
       });
   });
+
+exports.login = (app, email, password) =>
+  new Promise((resolve, reject) => {
+    request(app)
+      .post('/auth/login')
+      .send({ email, password })
+      .end((error, response) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      });
+  });
