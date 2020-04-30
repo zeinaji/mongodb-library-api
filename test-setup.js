@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./src/models/users');
+const Book = require('./src/models/books');
 
 beforeAll(done => {
   const url = process.env.DATABASE_CONN;
@@ -12,7 +13,9 @@ beforeAll(done => {
 
 afterEach(done => {
   User.deleteMany({}, () => {
-    done();
+    Book.deleteMany({}, () => {
+      done();
+    });
   });
 });
 

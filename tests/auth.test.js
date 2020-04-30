@@ -1,4 +1,3 @@
-const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const DataFactory = require('./helpers/data-factory');
 const UsersHelpers = require('./helpers/user-helpers');
